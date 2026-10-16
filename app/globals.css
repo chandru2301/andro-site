@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+/*
+ * Andro design tokens.
+ * Near-black canvas, soft white text, one signal colour (brand mint #3dd68c).
+ * Secondary hues exist only to tell node/edge kinds apart inside diagrams.
+ */
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  --color-ink: #040405;
+  --color-ink-1: #08080a;
+  --color-ink-2: #0c0c0f;
+  --color-ink-3: #131317;
+  --color-ink-4: #1b1b21;
+  --color-fg: #f3f4f3;
+  --color-fg-2: #c8ccd1;
+  --color-fg-3: #8d9299;
+  --color-fg-4: #62666d;
+  --color-fg-5: #3e4147;
+  --color-line: rgb(255 255 255 / 0.07);
+  --color-line-2: rgb(255 255 255 / 0.11);
+  --color-line-3: rgb(255 255 255 / 0.17);
+  --color-mint: #3dd68c;
+  --color-mint-2: #8af0c0;
+  --color-mint-3: #22a868;
+  --color-mint-4: #0e3a26;
+  --color-sky: #7cc4ff;
+  --color-violet: #ad9dff;
+  --color-amber: #f2c46d;
+  --color-rose: #ff7a8a;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --animate-marquee: marquee var(--marquee-duration, 45s) linear infinite;
+  --animate-orbit: orbit-spin var(--orbit-duration, 48s) linear infinite;
+  --animate-orbit-reverse: orbit-spin-reverse var(--orbit-duration, 48s) linear infinite;
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-quart) infinite;
+  --animate-blink: blink 1.05s step-end infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-beam: beam var(--beam-duration, 3.4s) linear infinite;
+  --animate-retro-grid: retro-grid 22s linear infinite;
+  --animate-border-spin: orbit-spin 5s linear infinite;
+  --animate-scan: scan 3.2s var(--ease-out-quart) infinite;
+  --animate-index-sweep: index-sweep 2.8s var(--ease-out-quart) infinite;
+  --animate-accordion-down: accordion-down 0.34s var(--ease-out-quart);
+  --animate-accordion-up: accordion-up 0.26s var(--ease-out-quart);
+
+  @keyframes index-sweep {
+    from { transform: translateX(-110%); }
+    to { transform: translateX(320%); }
+  }
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes orbit-spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes orbit-spin-reverse {
+    to { transform: rotate(-360deg); }
+  }
+  /* ShimmerButton (Magic UI via 21st.dev) */
+  @keyframes shimmer-slide {
+    to { transform: translate(calc(100cqw - 100%), 0); }
+  }
+  @keyframes spin-around {
+    0% { transform: translateZ(0) rotate(0); }
+    15%, 35% { transform: translateZ(0) rotate(90deg); }
+    65%, 85% { transform: translateZ(0) rotate(270deg); }
+    100% { transform: translateZ(0) rotate(360deg); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgb(61 214 140 / 0.5); }
+    70% { box-shadow: 0 0 0 8px rgb(61 214 140 / 0); }
+    100% { box-shadow: 0 0 0 0 rgb(61 214 140 / 0); }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes beam {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: var(--beam-travel, -600); }
+  }
+  /* RetroGrid (21st.dev) */
+  @keyframes retro-grid {
+    from { transform: translateY(-50%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgb(61 214 140 / 0.3);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Headline fill: bright at the top, receding into the dark. */
+@utility text-gradient {
+  background-image: linear-gradient(180deg, #ffffff 0%, rgb(255 255 255 / 0.9) 45%, rgb(255 255 255 / 0.55) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-mint {
+  background-image: linear-gradient(100deg, #c9fbe2 0%, #8af0c0 22%, #3dd68c 58%, #20b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.085) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+@utility mask-fade-y {
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+@utility mask-fade-b {
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+@utility mask-radial {
+  mask-image: radial-gradient(ellipse at center, #000 25%, transparent 70%);
+}
+
+/* Glass surface used by cards and windows. */
+@utility surface {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.012));
+  border: 1px solid var(--color-line);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 30px 80px -40px rgb(0 0 0 / 0.8);
+}
+
+/* Hairline divider with a mint glint in the middle. */
+@utility glint-line {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.1) 20%, rgb(61 214 140 / 0.55) 50%, rgb(255 255 255 / 0.1) 80%, transparent);
+}
+
+/* SVG label halo so graph text stays legible over edges. */
+@utility svg-halo {
+  paint-order: stroke;
+  stroke: var(--color-ink-1);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+/* Aurora background (21st.dev AuroraBackground, re-tuned to Andro mint). */
+.aurora {
+  --aurora-dark: repeating-linear-gradient(100deg, #040405 0%, #040405 7%, transparent 10%, transparent 12%, #040405 16%);
+  --aurora-glow: repeating-linear-gradient(100deg, #3dd68c 10%, #1c9f77 15%, #5fe0b0 20%, #8af0c0 25%, #1e8f5f 30%);
+  position: absolute;
+  inset: -10px;
+  background-image: var(--aurora-dark), var(--aurora-glow);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(14px);
+  opacity: 0.32;
+  pointer-events: none;
+  will-change: transform;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 12%, transparent 70%);
+}
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--aurora-dark), var(--aurora-glow);
+  background-size: 200%, 100%;
+  background-attachment: fixed;
+  mix-blend-mode: screen;
+  animation: aurora 60s linear infinite;
+}
+@keyframes aurora {
+  from { background-position: 50% 50%, 50% 50%; }
+  to { background-position: 350% 50%, 350% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,20 @@
+node_modules
+.next
+out
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+.DS_Store
+
+# added for chandru2301 repo
+.env
+.env.*
+!.env.example
+.cache/
+.m2/
+target/
+.next/
+dist/
+node_modules/
+*.jar
